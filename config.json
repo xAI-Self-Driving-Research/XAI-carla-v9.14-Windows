@@ -1,11 +1,12 @@
 {
-    "seed": 0,
+    "seed": [1282696,1282697,1282698,1282699],
     "host": "localhost",
     "port": 2000,
-    "delta_seconds": 0.02,
+    "delta_seconds": 0.05,
     "config_params": ["--reload-map"],
-    "scenario_stopping_time_in_sec": 15,
-    "scenario_speed": 5,
+    "scenario_stopping_time_in_sec": 5,
+    "scenario_speed": 1,
+    "num_runs": 4,
     "scenarios": [
         {
             "name": "Scenario 1",
@@ -14,15 +15,7 @@
             "traffic_config": ["--number-of-vehicles", "10", "--number-of-walkers", "20","--safe","--no-bikes"],
             "ego_vehicle_config": {
                 "model": "vehicle.*",
-                "sensor_configs": [
-                    {
-                        "model": "sensor.camera.rgb",
-                        "image_size_x": 640,
-                        "image_size_y": 480,
-                        "shutter_speed": 200,
-                        "fov": 105
-                    }
-                ],
+
                 "spectate_ego_settings": {
                     "spectator_height": 3,
                     "spectator_distance": 6
@@ -33,7 +26,7 @@
             "name": "Scenario 2",
             "map": "Town02",
             "weather": "CloudySunset",
-            "traffic_config": ["--number-of-vehicles", "15", "--number-of-walkers", "20","--safe","--no-bikes"],
+            "traffic_config": ["--number-of-vehicles", "1", "--number-of-walkers", "20","--safe","--no-bikes"],
             "ego_vehicle_config": {
                 "model": "vehicle.*",
                 "sensor_configs": [
@@ -66,7 +59,11 @@
                         "shutter_speed": 200,
                         "fov": 105
                     }
-                ]
+                ],
+                "spectate_ego_settings": {
+                    "spectator_height": 3,
+                    "spectator_distance": 6
+                }
             }
         }
     ]

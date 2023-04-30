@@ -163,10 +163,12 @@ class Client:
         self.all_actors = []
         self.sensors = []
         self.seed = self.config["seed"]
-        if self.seed:
-            random.seed(self.seed)
         
     # Getter and Setter functions
+    def get_seed(self):
+        return self.seed
+    def get_idx(self):
+        return self.idx
     def get_world(self):
         return self.world    
     def get_client(self):
@@ -186,6 +188,11 @@ class Client:
     def get_settings(self):
         return self.settings
     
+    def set_seed(self, seed):
+        self.seed = seed
+        random.seed(self.seed)
+    def set_idx(self, idx):
+        self.idx = idx
     def set_world(self, world):
         self.world = world
     def set_client(self, client):
@@ -278,14 +285,13 @@ class Client:
         transform = random.choice(self.world.get_map().get_spawn_points())
 
         # So let's tell the world to spawn the vehicle.
-        self.ego_vehicle = self.world.spawn_actor(bp, transform)
+        self.ego_vehicle = self.world.try_spawn_actor(bp, transform)
 
         # It is important to note that the actors we create won't be destroyed
         # unless we call their "destroy" function. If we fail to call "destroy"
         # they will stay in the simulation even after we quit the Python script.
         # For that reason, we are storing all the actors we create so we can
         # destroy them afterwards.
-        #self.all_actors.append(self.ego_vehicle)
         print('created %s' % self.ego_vehicle.type_id)
 
         # Let's put the vehicle to drive around.
@@ -335,8 +341,12 @@ class Client:
 
         if self.settings:
             self.setup_settings()
+        #self.world.tick()
+        #time.sleep(3)
         if self.ego_vehicle_model:
             self.setup_ego_vehicle()
+        #self.world.tick()
+        #time.sleep(3)
         if self.spectate_ego_settings:
             self.setup_spectator()
         if self.sensor_configs:
@@ -557,6 +567,7 @@ class Client:
         #    self.settings.tile_stream_distance = args.tile_stream_distance
         #if args.actor_active_distance is not None:
         #    self.settings.actor_active_distance = args.actor_active_distance
+        self.settings.max_substep_delta_time=0.005
         self.world.apply_settings(self.settings)
 
         if args.weather is not None:
@@ -879,23 +890,32 @@ def main():
                 client.get_world().tick()
                 time.sleep(client.delta_seconds/client.speed)
         else:
-            for scenario in client.config["scenarios"]:
-                # Setup and update the scenario
-                client.setup_scenario(scenario)
-                client.update_scenario()
-                time.sleep(2)
-                # Run the scenario for the specified amount of time from the config
-                for i in range(0, int(client.stopping_time*1000), int(client.delta_seconds*1000)):
-                    client.get_world().tick()
-                    # Follow the ego vehicle if specified
-                    if client.spectate_ego_settings:
-                        client.setup_spectator()
-                    time.sleep(client.delta_seconds/client.speed)
-                    
-                # Cleanup any remaining actors before moving on to the next scenario
-                client.clean()
-                # Index the next scenario
-                client.idx += 1
+            for run in range(0,client.config["num_runs"]):
+                client.idx = 0
+                
+                if client.config["seed"] != []:
+                    if len(client.config["seed"]) == client.config["num_runs"]:
+                        client.set_seed(client.config["seed"][run])
+                    else:
+                        client.set_seed(client.config["seed"][0])
+                print(client.seed)
+                for scenario in client.config["scenarios"]:
+                    # Setup and update the scenario
+                    client.setup_scenario(scenario)
+                    client.update_scenario()
+                    #time.sleep(2)
+                    # Run the scenario for the specified amount of time from the config
+                    for i in range(0, int(client.stopping_time*1000), int(client.delta_seconds*1000)):
+                        client.get_world().tick()
+                        # Follow the ego vehicle if specified
+                        if client.spectate_ego_settings:
+                            client.setup_spectator()
+                        time.sleep(client.delta_seconds/client.speed)
+                        
+                    # Cleanup any remaining actors before moving on to the next scenario
+                    client.clean()
+                    # Index the next scenario
+                    client.idx += 1
     finally:
         # Clean the scenario if a failure occurs, user exits the program, or the program ends
         client.clean()
