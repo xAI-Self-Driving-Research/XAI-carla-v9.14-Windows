@@ -1,5 +1,5 @@
 {
-    "seed": 991238,
+    "seed": 0,
     "host": "localhost",
     "port": 2000,
     "delta_seconds": 0.02,
@@ -66,11 +66,7 @@
                         "shutter_speed": 200,
                         "fov": 105
                     }
-                ],
-                "spectate_ego_settings": {
-                    "spectator_height": 3,
-                    "spectator_distance": 6
-                }
+                ]
             }
         }
     ]
