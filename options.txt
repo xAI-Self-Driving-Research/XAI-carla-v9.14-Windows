@@ -1,0 +1,14 @@
+weather presets:
+
+    ClearNight, ClearNoon, ClearSunset, CloudyNight, CloudyNoon,
+    CloudySunset, Default, DustStorm, HardRainNight, HardRainNoon,
+    HardRainSunset, MidRainSunset, MidRainyNight, MidRainyNoon,
+    SoftRainNight, SoftRainNoon, SoftRainSunset, WetCloudyNight,
+    WetCloudyNoon, WetCloudySunset, WetNight, WetNoon, WetSunset.
+
+available maps:
+
+    Town01, Town01_Opt, Town02, Town02_Opt, Town03, Town03_Opt,
+    Town04, Town04_Opt, Town05, Town05_Opt, Town06, Town06_Opt,
+    Town07, Town07_Opt, Town10HD, Town10HD_Opt, Town11/Town11,
+    Town12/Town12

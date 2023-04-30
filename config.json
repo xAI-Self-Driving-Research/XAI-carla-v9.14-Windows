@@ -1,0 +1,39 @@
+{
+    "seed": 0,
+    "host": "localhost",
+    "port": 2000,
+    "delta_seconds": 0.02,
+    "config_params": ["--reload-map"],
+    "scenario_stopping_time_in_sec": 10,
+    "scenario_speed": 5,
+    "scenarios": [
+        {
+            "name": "Scenario 1",
+            "map": "Town01",
+            "weather": "ClearNoon",
+            "traffic_config": ["--number-of-vehicles", "30", "--number-of-walkers", "20","--safe","--no-bikes"],
+            "ego_vehicle_config": {
+                "model": "vehicle.*",
+                "sensor_configs": [
+                    {
+                        "model": "sensor.lidar.ray_cast",
+                        "image_size_x": 640,
+                        "image_size_y": 480,
+                        "shutter_speed": 200,
+                        "fov": 105
+                    }
+                ],
+                "spectate_ego_settings": {
+                    "spectator_height": 3,
+                    "spectator_distance": 4
+                }
+            }
+            
+        },
+        {
+            "name": "Scenario 2",
+            "map": "Town02",
+            "weather": "CloudySunset"
+        }
+    ]
+}
