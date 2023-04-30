@@ -7,6 +7,12 @@ We advice that you git clone with SSH since we ran into some issues just using H
 2. Copy the SSH url for the repo
 3. In your terminal, enter: ```git clone <url>```
 
+## How to run the code
+1. Open the project in Visual Studio
+2. Source the environment by running the following command in the terminal from the root directory: ```. ./env/Scripts/activate```. If you don't have a virtual environment, you can create one by running the following command: ```python3 -3.8 -m venv env```. If you don't have python 3.8, you can download it here: https://www.python.org/downloads/release/python-3810/
+3. Run the carla server by running the following command wherever Carla is installed: ```./CarlaUE4.exe```
+4. Modify the ```config.json``` file to reflect the desired configurations and scenarios. You can view the ```options.txt``` file for a list of a few options.
+5. Run the code by running the following command in the terminal from the root directory: ```python3 main.py```
 ## Features to implement in CARLA
 We want to be able to modify certain features in CARLA to reflect a variety of scenarios. These features are split up between static and dynamic. 
 
