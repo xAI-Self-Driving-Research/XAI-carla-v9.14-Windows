@@ -1,9 +1,5 @@
 import carla
 import random
-import queue
-#import generate_traffic
-import subprocess
-#import config#, generate_traffic
 import time
 import json
 import carla
@@ -166,6 +162,9 @@ class Client:
         self.all_id = []
         self.all_actors = []
         self.sensors = []
+        self.seed = self.config["seed"]
+        if self.seed:
+            random.seed(self.seed)
         
     # Getter and Setter functions
     def get_world(self):
@@ -211,13 +210,15 @@ class Client:
         self.configure(['--host', self.host, '--port', str(self.port), '--map', self.map, '--weather', self.weather, '--delta-seconds', str(self.delta_seconds), *self.config_params],)
         
     def setup_traffic(self):
-        self.generate_traffic([*self.traffic_config])
+        if self.seed:
+            self.generate_traffic([*self.traffic_config, '--seed', str(self.seed)])
+        else:
+            self.generate_traffic([*self.traffic_config])
         
     def setup_sensors(self):
         # Let's add now a "depth" camera attached to the vehicle. Note that the
         # transform we give here is now relative to the vehicle.
         for sensor_config in self.sensor_configs:
-            print(sensor_config)
             sensor_bp = self.world.get_blueprint_library().find(sensor_config["model"])
             
             # @TODO Fix this hardcoded configuration of sensors
@@ -256,7 +257,7 @@ class Client:
         # The world contains the list blueprints that we can use for adding new
         # actors into the simulation.
         blueprint_library_filtered = self.world.get_blueprint_library().filter(self.ego_vehicle_model)
-        blueprint_library = [x for x in blueprint_library_filtered if (x.get_attribute('number_of_wheels').as_int() != 2)]
+        blueprint_library = [x for x in blueprint_library_filtered if (x.get_attribute('number_of_wheels').as_int() == 4 and not x.id.__contains__('vehicle.carlamotors.'))]
         if blueprint_library == []:
             blueprint_library = blueprint_library_filtered
         
@@ -471,9 +472,7 @@ class Client:
 
         if args.map is not None:
             print('load map %r.' % args.map)
-            print(self.client)
             self.world = self.client.load_world(args.map)
-            print(self.world )
         elif args.reload_map:
             print('reload map.')
             self.world = self.client.reload_world()
@@ -528,9 +527,7 @@ class Client:
 
         else:
             self.world = self.client.get_world()
-        print(self.world.get_settings())
         self.settings = self.world.get_settings()
-        print(self.world.get_settings())
         if args.no_rendering:
             print('disable rendering.')
             self.settings.no_rendering_mode = True
@@ -560,7 +557,6 @@ class Client:
         #    self.settings.tile_stream_distance = args.tile_stream_distance
         #if args.actor_active_distance is not None:
         #    self.settings.actor_active_distance = args.actor_active_distance
-        print("test")
         self.world.apply_settings(self.settings)
 
         if args.weather is not None:
@@ -720,7 +716,6 @@ class Client:
 
         blueprints = get_actor_blueprints(self.world, args.filterv, args.generationv, args.no_bikes)
         blueprintsWalkers = get_actor_blueprints(self.world, args.filterw, args.generationw)
-        print(blueprintsWalkers)
 
         if args.safe:
             blueprints = [x for x in blueprints if x.get_attribute('base_type') == 'car']
@@ -845,7 +840,7 @@ class Client:
         #if args.asynch or not synchronous_master:
         #    world.wait_for_tick()
         #else:
-        self.world.tick()
+        #self.world.tick()
 
         # 5. initialize each controller and set target to walk to (list is [controler, actor, controller, actor ...])
         # set how many pedestrians can cross the road
@@ -888,7 +883,7 @@ def main():
                 # Setup and update the scenario
                 client.setup_scenario(scenario)
                 client.update_scenario()
-
+                time.sleep(2)
                 # Run the scenario for the specified amount of time from the config
                 for i in range(0, int(client.stopping_time*1000), int(client.delta_seconds*1000)):
                     client.get_world().tick()

@@ -6,9 +6,74 @@ weather presets:
     SoftRainNight, SoftRainNoon, SoftRainSunset, WetCloudyNight,
     WetCloudyNoon, WetCloudySunset, WetNight, WetNoon, WetSunset.
 
+
 available maps:
 
     Town01, Town01_Opt, Town02, Town02_Opt, Town03, Town03_Opt,
     Town04, Town04_Opt, Town05, Town05_Opt, Town06, Town06_Opt,
     Town07, Town07_Opt, Town10HD, Town10HD_Opt, Town11/Town11,
     Town12/Town12
+
+
+available vehicles:
+
+    vehicle.audi.a2
+    vehicle.nissan.micra
+    vehicle.audi.tt
+    vehicle.mercedes.coupe_2020
+    vehicle.bmw.grandtourer
+    vehicle.harley-davidson.low_rider
+    vehicle.ford.ambulance
+    vehicle.micro.microlino
+    vehicle.carlamotors.firetruck
+    vehicle.carlamotors.carlacola
+    vehicle.ford.mustang
+    vehicle.chevrolet.impala
+    vehicle.lincoln.mkz_2020
+    vehicle.citroen.c3
+    vehicle.dodge.charger_police
+    vehicle.nissan.patrol
+    vehicle.jeep.wrangler_rubicon
+    vehicle.mini.cooper_s
+    vehicle.mercedes.coupe
+    vehicle.dodge.charger_2020
+    vehicle.ford.crown
+    vehicle.seat.leon
+    vehicle.toyota.prius
+    vehicle.yamaha.yzf
+    vehicle.kawasaki.ninja
+    vehicle.bh.crossbike
+    vehicle.mitsubishi.fusorosa
+    vehicle.tesla.model3
+    vehicle.gazelle.omafiets
+    vehicle.tesla.cybertruck
+    vehicle.diamondback.century
+    vehicle.mercedes.sprinter
+    vehicle.audi.etron
+    vehicle.volkswagen.t2
+    vehicle.lincoln.mkz_2017
+    vehicle.dodge.charger_police_2020
+    vehicle.vespa.zx125
+    vehicle.mini.cooper_s_2021
+    vehicle.nissan.patrol_2021
+    vehicle.volkswagen.t2_2021
+
+
+available sensors:
+
+    sensor.other.collision
+    sensor.camera.depth
+    sensor.camera.optical_flow
+    sensor.camera.normals
+    sensor.other.lane_invasion
+    sensor.camera.dvs
+    sensor.other.imu
+    sensor.other.gnss
+    sensor.other.obstacle
+    sensor.other.radar
+    sensor.lidar.ray_cast_semantic
+    sensor.lidar.ray_cast
+    sensor.camera.rgb
+    sensor.camera.semantic_segmentation
+    sensor.other.rss
+    sensor.camera.instance_segmentation
