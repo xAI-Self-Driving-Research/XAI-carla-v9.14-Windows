@@ -44,9 +44,9 @@ The config file is used to specify the desired configurations and scenarios.
   - delta_seconds is the time between each frame in seconds. This is used to calculate the time between each frame in milliseconds.
   - scenario_speed is the speed multiplier of all agents in the scenario.
   - scenario_stopping_time_in_sec is the time in seconds that the scenario will run for.
-  - seed is the seed to be used for the random number generator. If you don't want this, set the value to 0
+  - seed is a list of the seeds to be used for the random number generator. If you don't want this, set the value to []
 - All sensor readings will be saved to an ```out``` directory from root. From there, each scenario will have its own directory with the sensor frames saved in a subdirectory named after the time the scenario started. The sensor readings will be saved in a png file with the frame number as the name. ex: ```out/2023-04-30, 03-00-35/1282696.png```
-- If you want to run your scenarios multiple times, set ```num_runs``` to the number of times you want to run the scenarios. Then, if you want a different seed for each run, set ```seed``` to an array containing each seed you want to use for each scenario. Otherwise, if you want 1 seed for all scenarios, set ```seed``` to a single value. If you don't want to use a seed, set ```seed``` to 0.
+- If you want to run your scenarios multiple times, set ```num_runs``` to the number of times you want to run the scenarios. Then, if you want a different seed for each run, set ```seed``` to a list containing each seed you want to use for each scenario. Otherwise, if you want 1 seed for all scenarios, set ```seed``` to a list containing a single value. If you don't want to use a seed, set ```seed``` to [].
 ## Features to implement in CARLA
 We want to be able to modify certain features in CARLA to reflect a variety of scenarios. These features are split up between static and dynamic. 
 
